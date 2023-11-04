@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, useContext } from 'react';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
@@ -12,12 +12,11 @@ const CreateNFT = () => {
   const [fileUrl, setFileUrl] = useState(null);
   const [formInput, setFormInput] = useState({ price: '', name: '', description: '' });
   const { theme } = useTheme();
-  const { uploadToIPFS } = useContext(NFTContext);
+  const { uploadToIPFS, createNFT } = useContext(NFTContext);
+  const router = useRouter();
 
   const onDrop = useCallback(async (acceptedFile) => {
     const url = await uploadToIPFS(acceptedFile[0]);
-
-    console.log({ url });
 
     setFileUrl(url);
   }, []);
@@ -93,7 +92,7 @@ const CreateNFT = () => {
           <Button
             btnName="Create NFT"
             classStyles="rounded-xl"
-            handleClick={() => { }}
+            handleClick={() => createNFT(formInput, fileUrl, router)}
           />
         </div>
       </div>
