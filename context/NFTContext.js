@@ -10,6 +10,8 @@ const projectId = process.env.NEXT_PUBLIC_INFURA_API_KEY;
 const projectSecretKey = process.env.NEXT_PUBLIC_INFURA_API_SECRET;
 const auth = `Basic ${Buffer.from(`${projectId}:${projectSecretKey}`).toString('base64')}`;
 
+const sepoliaRpcUrl = 'https://sepolia.infura.io/v3/eab413085f974ad68d5bc1ba3889e702';
+
 const client = ipfsHttpClient({
   host: 'ipfs.infura.io',
   port: 5001,
@@ -26,7 +28,7 @@ export const NFTContext = React.createContext();
 export const NFTProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState('');
   const [isLoadingNFT, setIsLoadingNFT] = useState(false);
-  const nftCurrency = 'ETH';
+  const nftCurrency = 'DeIT';
 
   const checkIfWalletIsConnected = async () => {
     if (!window.ethereum) return alert('Please install MeqaMask');
@@ -89,7 +91,7 @@ export const NFTProvider = ({ children }) => {
   const createSale = async (url, formInputPrice, isReselling, id) => {
     const web3Modal = new Web3modal();
     const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
+    const provider = new ethers.providers.Web3Provider(connection, 'any');
     const signer = provider.getSigner();
 
     const price = ethers.utils.parseUnits(formInputPrice, 'ether');
@@ -107,7 +109,7 @@ export const NFTProvider = ({ children }) => {
   const fetchNFTs = async () => {
     setIsLoadingNFT(false);
 
-    const provider = new ethers.providers.JsonRpcProvider();
+    const provider = new ethers.providers.JsonRpcProvider(sepoliaRpcUrl);
     const contract = fetchContract(provider);
 
     const data = await contract.fetchMarketItems();
@@ -137,7 +139,7 @@ export const NFTProvider = ({ children }) => {
 
     const web3Modal = new Web3modal();
     const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
+    const provider = new ethers.providers.Web3Provider(connection, 'any');
     const signer = provider.getSigner();
 
     const contract = fetchContract(signer);
@@ -169,7 +171,7 @@ export const NFTProvider = ({ children }) => {
   const buyNFT = async (nft) => {
     const web3Modal = new Web3modal();
     const connection = await web3Modal.connect();
-    const provider = new ethers.providers.Web3Provider(connection);
+    const provider = new ethers.providers.Web3Provider(connection, 'any');
     const signer = provider.getSigner();
 
     const contract = fetchContract(signer);
