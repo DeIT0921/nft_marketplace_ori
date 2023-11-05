@@ -104,7 +104,7 @@ const Home = () => {
     <div className="flex justify-center sm:px-4 p-12">
       <div className="w-full minmd:w-4/5">
         <Banner
-          name={(<>Discover, collect, and sell <br /> extraodinary NFTs</>)}
+          name={(<>Discover, collect, and sell <br /> extraordinary NFTs</>)}
           parentStyles="justify-start mb-6 h-72 sm:h-60 p-12 xs:p-4 xs:h-44 rounded-3xl"
           childStyles="md:text-4xl sm:text-2xl xs:text-xl text-left"
         />
@@ -143,7 +143,7 @@ const Home = () => {
                           layout="fill"
                           objectFit="contain"
                           alt="left_arrow"
-                          className={theme === 'light' && 'filter invert'}
+                          className={theme === 'light' ? 'filter invert' : ''}
                         />
                       </div>
                       <div onClick={() => handleScroll('right')} className="absolute w-8 h-8 minlg:w-12 minlg:h-12 top-45 cursor-pointer right-0">
@@ -152,7 +152,7 @@ const Home = () => {
                           layout="fill"
                           objectFit="contain"
                           alt="left_arrow"
-                          className={theme === 'light' && 'filter invert'}
+                          className={theme === 'light' ? 'filter invert' : ''}
                         />
                       </div>
                     </>

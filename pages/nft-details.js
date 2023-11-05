@@ -38,7 +38,7 @@ const PaymentBodyCmp = ({ nft, nftCurrency }) => (
 );
 
 const NFTDetails = () => {
-  const { currentAccount, nftCurrency, buyNFT } = useContext(NFTContext);
+  const { isLoadingNFT, currentAccount, nftCurrency, buyNFT } = useContext(NFTContext);
   const [isLoading, setIsLoading] = useState(true);
   const [nft, setNft] = useState({ image: '', tokenId: '', name: '', owner: '', price: '', seller: '' });
   const router = useRouter();
@@ -106,7 +106,7 @@ const NFTDetails = () => {
         <div className="flex flex-row sm:flex-col mt-10">
           {currentAccount === nft.seller.toLowerCase()
             ? (
-              <p className="font-poppins dark:text-white text-nft-black-1 font-normal text-base border-gray p-2">
+              <p className="font-poppins dark:text-white text-nft-black-1 font-normal text-base border border-gray p-2">
                 You cannot buy your own NFT
               </p>
             ) : currentAccount === nft.owner.toLowerCase()
@@ -141,6 +141,20 @@ const NFTDetails = () => {
                 classStyles="rounded-xl"
                 handleClick={() => setPaymentModal(false)}
               />
+            </div>
+          )}
+          handleClose={() => setPaymentModal(false)}
+        />
+      )}
+
+      {isLoadingNFT && (
+        <Modal
+          header="Buying NFT..."
+          body={(
+            <div className="flexCenter flex-col text-center">
+              <div className="relative w-52 h-52">
+                <Loader />
+              </div>
             </div>
           )}
           handleClose={() => setPaymentModal(false)}

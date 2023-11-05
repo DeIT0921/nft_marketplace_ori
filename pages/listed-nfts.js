@@ -6,13 +6,13 @@ import { Loader, NFTCard } from '../components';
 const ListedNFTs = () => {
   const { fetchMyNFTsOrListedNFTs } = useContext(NFTContext);
   const [nfts, setNfts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchMyNFTsOrListedNFTs('fetchItemsListed')
       .then((items) => {
         setNfts(items);
-        setIsLoading(isLoading);
+        setIsLoading(false);
       });
   }, []);
 
@@ -26,8 +26,8 @@ const ListedNFTs = () => {
 
   if (!isLoading && nfts.length === 0) {
     return (
-      <div className="flexCenter sm:p-4 -16 min-h-screen">
-        <h1 className="font-poppins dark:text-white text-nft-black-1 text-3xl font-extrabold">No NFTs Listed for sale</h1>
+      <div className="flexCenter sm:p-4 p-16 min-h-screen">
+        <h1 className="font-poppins dark:text-white text-nft-black-1 text-3xl font-extrabold">No NFTs Listed for Sale</h1>
       </div>
     );
   }
